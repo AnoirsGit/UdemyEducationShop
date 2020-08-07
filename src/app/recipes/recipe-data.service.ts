@@ -1,8 +1,11 @@
 import { Injectable , EventEmitter} from '@angular/core';
 import { Recipe} from './recipe.model'
 import { Ingredient } from '../shared/ingredient.model';
-import { ShoppingService } from '../shopping-list/shopping-service.service';
+
 import { Subject } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as SLActions from '../shopping-list/store/shopping-list.actions';
+import * as fromSL from '../shopping-list/store/shopping-list.reducer';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +14,15 @@ export class RecipeDataService {
 
 recpeSelected = new EventEmitter<Recipe>();
   private recipes: Recipe[] = [];
-  constructor(private slService:ShoppingService) { }
+  
+  
+  constructor
+  (
+    
+    private store: Store <fromSL.AppState>
+    ) 
+  { }
+
 
   recipeChanged = new Subject<Recipe[]>();
 
@@ -24,7 +35,8 @@ recpeSelected = new EventEmitter<Recipe>();
   }
 
   addIgredients( ing: Ingredient[] ){
-    this.slService.AddIngredients(ing);
+    // this.slService.AddIngredients(ing);
+    this.store.dispatch(new SLActions.AddIngredients(ing));
   }
 
   addRecipe( recipe: Recipe){

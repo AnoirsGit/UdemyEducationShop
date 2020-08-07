@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 
 
-import { ShoppingService } from './shopping-list/shopping-service.service';
+
 import {RecipeDataService} from './recipes/recipe-data.service';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
@@ -47,7 +47,7 @@ import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer
     ShoppingListRoutingModule
   
   ],
-  providers: [ShoppingService , RecipeDataService , 
+  providers: [ RecipeDataService , 
     {
       provide : HTTP_INTERCEPTORS, 
       useClass : AuthInterceptorService, 
