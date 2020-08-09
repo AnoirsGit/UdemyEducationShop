@@ -2,6 +2,10 @@ import { Component, OnInit, OnDestroy, } from '@angular/core';
 import { DataStorageService } from '../shared/data-storage.service';
 import { AuthService } from '../auth/auth.service';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../store/app.reducer'
+import { map } from 'rxjs/operators'
+import { Logout } from '../auth/store/auth.actions'
 
 @Component({
   selector: 'app-header',
@@ -14,7 +18,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataStorage: DataStorageService,
-    private auth: AuthService){}
+    private auth: AuthService,
+    private store: Store<fromApp.AppState>
+    ){}
 
   public isMenuCollapsed = true;
   
@@ -27,7 +33,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(){
-    this.userSub =  this.auth.user.subscribe(user =>{
+    this.userSub =  this.store.select('auth').pipe( map( authState => authState.user)).subscribe(user =>{
       this.authenticated= !user ? false :true
     });
   }
@@ -37,7 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   
   logout(){
-    this.auth.logout();
+    this.store.dispatch( new Logout());
   }
 
   

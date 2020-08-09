@@ -5,7 +5,7 @@ import { Ingredient } from '../shared/ingredient.model';
 import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as SLActions from '../shopping-list/store/shopping-list.actions';
-import * as fromSL from '../shopping-list/store/shopping-list.reducer';
+import * as fromApp from '../store/app.reducer';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ recpeSelected = new EventEmitter<Recipe>();
   constructor
   (
     
-    private store: Store <fromSL.AppState>
+    private store: Store <fromApp.AppState>
     ) 
   { }
 
